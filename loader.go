@@ -6,6 +6,7 @@ package browscap_go
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 )
@@ -80,6 +81,9 @@ func loadFromReader(buf *bufio.Reader) (*dictionary, error) {
 
 		// Key => Value
 		kv := bytes.SplitN(line, sEqual, 2)
+		if len(kv) != 2 {
+			return nil, fmt.Errorf("invalid browscap.ini  section=%q; line=%q", sectionName, string(line))
+		}
 
 		// Parse Key
 		keyb := bytes.TrimSpace(kv[0])
